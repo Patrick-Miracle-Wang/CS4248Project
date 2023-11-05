@@ -60,8 +60,10 @@ def get_tokens(s):
   if not s: return []
   return normalize_answer(s).split()
 
-def compute_exact(a_gold, a_pred):
-  return int(normalize_answer(a_gold) == normalize_answer(a_pred))
+def compute_exact(a_gold, a_pred,result):
+  if normalize_answer(a_gold) != normalize_answer(a_pred) :
+    result.add((a_gold,a_pred))
+  return int(normalize_answer(a_gold) == normalize_answer(a_pred)),result
 
 def compute_f1(a_gold, a_pred):
   gold_toks = get_tokens(a_gold)
@@ -81,6 +83,7 @@ def compute_f1(a_gold, a_pred):
 def get_raw_scores(dataset, preds):
   exact_scores = {}
   f1_scores = {}
+  result = set()
   for article in dataset:
     for p in article['paragraphs']:
       for qa in p['qas']:
@@ -95,9 +98,9 @@ def get_raw_scores(dataset, preds):
           continue
         a_pred = preds[qid]
         # Take max over all gold answers
-        exact_scores[qid] = max(compute_exact(a, a_pred) for a in gold_answers)
+        exact_scores[qid],result = max(compute_exact(a, a_pred,result) for a in gold_answers)
         f1_scores[qid] = max(compute_f1(a, a_pred) for a in gold_answers)
-  return exact_scores, f1_scores
+  return exact_scores, f1_scores, result
 
 def apply_no_ans_threshold(scores, na_probs, qid_to_has_ans, na_prob_thresh):
   new_scores = {}
@@ -239,10 +242,22 @@ def main():
       na_probs = json.load(f)
   else:
     na_probs = {k: 0.0 for k in preds}
+  #Check whether each question has answer or not, and record question's id in the dict
   qid_to_has_ans = make_qid_to_has_ans(dataset)  # maps qid to True/False
+  #Filter questions which has answer
   has_ans_qids = [k for k, v in qid_to_has_ans.items() if v]
+  # Filter questions which hasn't answer
   no_ans_qids = [k for k, v in qid_to_has_ans.items() if not v]
-  exact_raw, f1_raw = get_raw_scores(dataset, preds)
+
+  exact_raw, f1_raw, result = get_raw_scores(dataset, preds)
+
+  #Save wrong sample
+  with open("../ResultFiles/"+OPTS.pred_file[15:][:-5]+"-WrongSample.txt", 'w') as file11:
+    for s in result:
+      for ss in s:
+        file11.write(ss+"\n")
+      file11.write("***********************************"+"\n")
+
   exact_thresh = apply_no_ans_threshold(exact_raw, na_probs, qid_to_has_ans,
                                         OPTS.na_prob_thresh)
   f1_thresh = apply_no_ans_threshold(f1_raw, na_probs, qid_to_has_ans,
@@ -261,6 +276,7 @@ def main():
                                   qid_to_has_ans, OPTS.out_image_dir)
     histogram_na_prob(na_probs, has_ans_qids, OPTS.out_image_dir, 'hasAns')
     histogram_na_prob(na_probs, no_ans_qids, OPTS.out_image_dir, 'noAns')
+  out_eval["Model Name"] = OPTS.pred_file[15:][:-5]
   if OPTS.out_file:
     with open(OPTS.out_file, 'w') as f:
       json.dump(out_eval, f)

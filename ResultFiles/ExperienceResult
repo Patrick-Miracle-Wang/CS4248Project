@@ -1,0 +1,54 @@
+{
+  "exact": 89.93377483443709,
+  "f1": 95.03847249861889,
+  "total": 10570,
+  "HasAns_exact": 89.93377483443709,
+  "HasAns_f1": 95.03847249861889,
+  "HasAns_total": 10570,
+  "Model Name": "t5-3b"
+}
+{
+  "exact": 83.41532639545885,
+  "f1": 90.24818771560031,
+  "total": 10570,
+  "HasAns_exact": 83.41532639545885,
+  "HasAns_f1": 90.24818771560031,
+  "HasAns_total": 10570,
+  "Model Name": "t5-base"
+}
+{
+  "exact": 85.63859981078524,
+  "f1": 92.09888240239154,
+  "total": 10570,
+  "HasAns_exact": 85.63859981078524,
+  "HasAns_f1": 92.09888240239154,
+  "HasAns_total": 10570,
+  "Model Name": "roberta-base"
+}
+{
+  "exact": 88.04162724692526,
+  "f1": 94.15661902888847,
+  "total": 10570,
+  "HasAns_exact": 88.04162724692526,
+  "HasAns_f1": 94.15661902888847,
+  "HasAns_total": 10570,
+  "Model Name": "roberta-large"
+}
+{
+  "exact": 86.0643330179754,
+  "f1": 92.21075149251102,
+  "total": 10570,
+  "HasAns_exact": 86.0643330179754,
+  "HasAns_f1": 92.21075149251102,
+  "HasAns_total": 10570,
+  "Model Name": "flan-t5-base"
+}
+{
+  "exact": 86.58467360454115,
+  "f1": 93.34871015829316,
+  "total": 10570,
+  "HasAns_exact": 86.58467360454115,
+  "HasAns_f1": 93.34871015829316,
+  "HasAns_total": 10570,
+  "Model Name": "llama-2-7B"
+}
