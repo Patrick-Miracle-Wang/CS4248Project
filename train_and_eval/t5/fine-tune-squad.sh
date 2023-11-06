@@ -1,0 +1,16 @@
+CUDA_VISIBLE_DEVICES=0,1,2,3 torchrun --nproc_per_node=4 --master_port=10047 train-t5-hf-squad.py \
+	--model_name_or_path google/flan-t5-base \
+	--data_path squad/Preprocessed_train-v1.1.json \
+	--output_dir flan-t5-base-squad \
+	--bf16 True \
+	--num_train_epochs 1 \
+	--per_device_train_batch_size 1 \
+	--per_device_eval_batch_size 1 \
+    --evaluation_strategy "no" \
+    --save_strategy "no" \
+	--save_total_limit 3 \
+    --learning_rate 1e-5 \
+    --weight_decay 0.01 \
+    --warmup_ratio 0.03 \
+	--lr_scheduler_type "cosine" \
+    --logging_steps 1
