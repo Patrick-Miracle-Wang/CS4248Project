@@ -9,6 +9,8 @@ import transformers
 import json
 from transformers import GenerationConfig, StoppingCriteria, StoppingCriteriaList
 from typing import Dict, Optional, Sequence
+import string
+import re
 
 
 @dataclass
@@ -33,23 +35,38 @@ class InferenceArguments:
     )
 
 
+def normalize_answer(s):
+    """Lower text and remove punctuation, articles and extra whitespace."""
+    def remove_articles(text):
+        regex = re.compile(r'\b(a|an|the)\b', re.UNICODE)
+        return re.sub(regex, ' ', text)
+    def white_space_fix(text):
+        return ' '.join(text.split())
+    def remove_punc(text):
+        exclude = set(string.punctuation)
+        return ''.join(ch for ch in text if ch not in exclude)
+    def lower(text):
+        return text.lower()
+    return white_space_fix(remove_articles(remove_punc(lower(s))))
+
+
 def is_answer_exactly_match(origin_answer, right_answer):
     alternative_answers = []
     if "output" in right_answer:
-        alternative_answers.append(right_answer["output"])
+        alternative_answers.append(normalize_answer(right_answer["output"]))
     if "output0" in right_answer:
-        alternative_answers.append(right_answer["output0"])
+        alternative_answers.append(normalize_answer(right_answer["output0"]))
     if "output1" in right_answer:
-        alternative_answers.append(right_answer["output1"])
+        alternative_answers.append(normalize_answer(right_answer["output1"]))
     if "output2" in right_answer:
-        alternative_answers.append(right_answer["output2"])
+        alternative_answers.append(normalize_answer(right_answer["output2"]))
     if "output3" in right_answer:
-        alternative_answers.append(right_answer["output3"])
+        alternative_answers.append(normalize_answer(right_answer["output3"]))
     if "output4" in right_answer:
-        alternative_answers.append(right_answer["output4"])
+        alternative_answers.append(normalize_answer(right_answer["output4"]))
     if "output5" in right_answer:
-        alternative_answers.append(right_answer["output5"])
-    return origin_answer["response"] in alternative_answers
+        alternative_answers.append(normalize_answer(right_answer["output5"]))
+    return normalize_answer(origin_answer["response"]) in alternative_answers
 
 
 def inference():
@@ -99,8 +116,8 @@ def inference():
             new_results.append(origin_answer)
         print("---------------------------------------")
     
-    print("writing to squad-answers/llama-2-7B-rethink.json")
-    with open("squad-answers/llama-2-7B-rethink.json", "w") as f:
+    print("writing to squad-answers/llama-2-7B-rethink-v2.json")
+    with open("squad-answers/llama-2-7B-rethink-v2.json", "w") as f:
         json.dump(new_results, f, indent=4, ensure_ascii=False)
 
     # ctx = "Super Bowl 50 was an American football game to determine the champion of the National Football League (NFL) for the 2015 season. The American Football Conference (AFC) champion Denver Broncos defeated the National Football Conference (NFC) champion Carolina Panthers 24–10 to earn their third Super Bowl title. The game was played on February 7, 2016, at Levi's Stadium in the San Francisco Bay Area at Santa Clara, California. As this was the 50th Super Bowl, the league emphasized the \"golden anniversary\" with various gold-themed initiatives, as well as temporarily suspending the tradition of naming each Super Bowl game with Roman numerals (under which the game would have been known as \"Super Bowl L\"), so that the logo could prominently feature the Arabic numerals 50.\n" + \
