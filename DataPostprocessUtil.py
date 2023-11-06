@@ -28,7 +28,6 @@ def getIds(dataset):
             for qa in p['qas']:
                 qid = qa['id']
                 ids.append(qid)
-
     return ids
 
 if __name__ == "__main__":
@@ -37,4 +36,5 @@ if __name__ == "__main__":
     #getPredFileFromResult("Result/roberta-base.json", "Project/dev-v1.1.json")
     #getPredFileFromResult("Result/roberta-large.json", "Project/dev-v1.1.json")
     #getPredFileFromResult("Result/t5-3b.json","Project/dev-v1.1.json")
-    getPredFileFromResult("Result/t5-base.json","Project/dev-v1.1.json")
+    #getPredFileFromResult("Result/t5-base.json","Project/dev-v1.1.json")
+    getPredFileFromResult("Result/llama-2-7B-rethink.json","Project/dev-v1.1.json")

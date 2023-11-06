@@ -52,3 +52,12 @@
   "HasAns_total": 10570,
   "Model Name": "llama-2-7B"
 }
+{
+  "exact": 87.18070009460737,
+  "f1": 92.19587848314356,
+  "total": 10570,
+  "HasAns_exact": 87.18070009460737,
+  "HasAns_f1": 92.19587848314356,
+  "HasAns_total": 10570,
+  "Model Name": "llama-2-7B-rethink"
+}

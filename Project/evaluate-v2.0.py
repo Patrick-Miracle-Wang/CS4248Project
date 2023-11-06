@@ -252,7 +252,7 @@ def main():
   exact_raw, f1_raw, result = get_raw_scores(dataset, preds)
 
   #Save wrong sample
-  with open("../ResultFiles/"+OPTS.pred_file[15:][:-5]+"-WrongSample.txt", 'w') as file11:
+  with open("ResultFiles/"+OPTS.pred_file[15:][:-5]+"-WrongSample.txt", 'w') as file11:
     for s in result:
       for ss in s:
         file11.write(ss+"\n")
