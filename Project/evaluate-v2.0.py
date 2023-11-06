@@ -251,12 +251,13 @@ def main():
 
   exact_raw, f1_raw, result = get_raw_scores(dataset, preds)
 
+
   #Save wrong sample
-  with open("ResultFiles/"+OPTS.pred_file[15:][:-5]+"-WrongSample.txt", 'w') as file11:
-    for s in result:
-      for ss in s:
-        file11.write(ss+"\n")
-      file11.write("***********************************"+"\n")
+  #with open("ResultFiles/"+OPTS.pred_file[15:][:-5]+"-WrongSample.txt", 'w') as file11:
+  #  for s in result:
+  #    for ss in s:
+  #      file11.write(ss+"\n")
+  #    file11.write("***********************************"+"\n")
 
   exact_thresh = apply_no_ans_threshold(exact_raw, na_probs, qid_to_has_ans,
                                         OPTS.na_prob_thresh)

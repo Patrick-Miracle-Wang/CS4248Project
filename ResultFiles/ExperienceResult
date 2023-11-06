@@ -61,3 +61,21 @@
   "HasAns_total": 10570,
   "Model Name": "llama-2-7B-rethink"
 }
+{
+  "exact": 90.05676442762535,
+  "f1": 93.36615394638056,
+  "total": 10570,
+  "HasAns_exact": 90.05676442762535,
+  "HasAns_f1": 93.36615394638056,
+  "HasAns_total": 10570,
+  "Model Name": "t5-3b-rethink"
+}
+{
+  "exact": 89.36613055818354,
+  "f1": 93.17880907671758,
+  "total": 10570,
+  "HasAns_exact": 89.36613055818354,
+  "HasAns_f1": 93.17880907671758,
+  "HasAns_total": 10570,
+  "Model Name": "llama-2-7B-rethink-3-times"
+}
