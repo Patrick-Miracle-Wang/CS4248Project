@@ -2,7 +2,7 @@
 
 # DataPreprocessing
 
-Use DataPreprocessUtils.py to get question-answer paris file
+1.Use DataPreprocessUtils.py to get question-answer paris file
 
 run DataPostprocessing.py main()
 
