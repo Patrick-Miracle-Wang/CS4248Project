@@ -5,7 +5,7 @@
 import json
 
 def getPredFileFromResult(filePath,datasetPath):
-    with open(filePath,'r',) as file:
+    with open(filePath,'r',encoding='utf-8') as file:
         data = json.load(file)
 
     with open(datasetPath, 'r') as file1:
@@ -38,4 +38,5 @@ if __name__ == "__main__":
     #getPredFileFromResult("Result/t5-3b.json","Project/dev-v1.1.json")
     #getPredFileFromResult("Result/t5-base.json","Project/dev-v1.1.json")
     #getPredFileFromResult("Result/t5-3b-rethink.json","Project/dev-v1.1.json")
-    getPredFileFromResult("Result/llama-2-7B-rethink-3-times.json","Project/dev-v1.1.json")
+    #getPredFileFromResult("Result/llama-2-7B-rethink-3-times.json","Project/dev-v1.1.json")
+    getPredFileFromResult("Result/llama-2-7B-rethink.json","Project/dev-v1.1.json")
